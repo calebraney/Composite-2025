@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
         //functional interactions
         hoverActive(gsapContext);
         marquee(gsapContext);
-        // load(gsapContext)
+        load(gsapContext);
         //conditional interactions
         if (!reduceMotion) {
           scrollIn(gsapContext);
