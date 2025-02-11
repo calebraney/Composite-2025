@@ -19,6 +19,23 @@ document.addEventListener('DOMContentLoaded', function () {
   //////////////////////////////
   //Global Variables
 
+  /////////////////////////////
+  //Slider instances
+  const resultsSlider = function () {
+    const COMPONENT = '.results-slider_component';
+    const components = [...document.querySelectorAll(COMPONENT)];
+    const options = {
+      loop: true,
+    };
+    //apply a module with defaults settings (canc override them using the options object above)
+    const modules = {
+      navigation: false,
+      pagination: false,
+      scrollbar: false,
+      autoplay: { delay: 5000 },
+    };
+    const sliders = createSlider(components, options, modules);
+  };
   //////////////////////////////
   //Control Functions on page load
   const gsapInit = function () {
@@ -37,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
         hoverActive(gsapContext);
         marquee(gsapContext);
         load(gsapContext);
+        resultsSlider();
         //conditional interactions
         if (!reduceMotion) {
           scrollIn(gsapContext);
