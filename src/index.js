@@ -3,6 +3,7 @@ import { hoverActive } from './interactions/hover-active';
 import { load } from './interactions/load';
 import { marquee } from './interactions/marquee';
 import { scrollIn } from './interactions/scroll-in';
+import { createSlider } from './interactions/slider';
 import { scrolling } from './interactions/scrolling';
 
 document.addEventListener('DOMContentLoaded', function () {
