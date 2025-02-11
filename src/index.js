@@ -1,6 +1,9 @@
 import { attr } from './utilities';
 import { hoverActive } from './interactions/hover-active';
+import { load } from './interactions/load';
+import { marquee } from './interactions/marquee';
 import { scrollIn } from './interactions/scroll-in';
+import { scrolling } from './interactions/scrolling';
 
 document.addEventListener('DOMContentLoaded', function () {
   // Comment out for production
@@ -32,9 +35,12 @@ document.addEventListener('DOMContentLoaded', function () {
         let { isMobile, isTablet, isDesktop, reduceMotion } = gsapContext.conditions;
         //functional interactions
         hoverActive(gsapContext);
+        marquee(gsapContext);
+        // load(gsapContext)
         //conditional interactions
         if (!reduceMotion) {
           scrollIn(gsapContext);
+          scrolling(gsapContext);
         }
       }
     );
