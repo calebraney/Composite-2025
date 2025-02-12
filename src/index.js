@@ -30,10 +30,26 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     //apply a module with defaults settings (canc override them using the options object above)
     const modules = {
-      navigation: false,
+      navigation: true,
       pagination: false,
       scrollbar: false,
-      autoplay: { delay: 5000 },
+      autoplay: false,
+    };
+    const sliders = createSlider(components, options, modules);
+  };
+
+  const testimonialsSlider = function () {
+    const COMPONENT = '.testimonials-slider_component';
+    const components = [...document.querySelectorAll(COMPONENT)];
+    const options = {
+      loop: true,
+    };
+    //apply a module with defaults settings (canc override them using the options object above)
+    const modules = {
+      navigation: true,
+      pagination: false,
+      scrollbar: false,
+      autoplay: false,
     };
     const sliders = createSlider(components, options, modules);
   };
@@ -56,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
         marquee(gsapContext);
         load(gsapContext);
         resultsSlider();
+        testimonialsSlider();
         //conditional interactions
         if (!reduceMotion) {
           scrollIn(gsapContext);
