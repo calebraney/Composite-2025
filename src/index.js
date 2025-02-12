@@ -26,7 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const COMPONENT = '.results-slider_component';
     const components = [...document.querySelectorAll(COMPONENT)];
     const options = {
-      loop: true,
+      loop: false,
+      slidesPerView: 'auto',
     };
     //apply a module with defaults settings (canc override them using the options object above)
     const modules = {
@@ -42,7 +43,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const COMPONENT = '.testimonials-slider_component';
     const components = [...document.querySelectorAll(COMPONENT)];
     const options = {
-      loop: true,
+      loop: false,
+      slidesPerView: 'auto',
     };
     //apply a module with defaults settings (canc override them using the options object above)
     const modules = {
@@ -50,6 +52,23 @@ document.addEventListener('DOMContentLoaded', function () {
       pagination: false,
       scrollbar: false,
       autoplay: false,
+    };
+    const sliders = createSlider(components, options, modules);
+  };
+
+  const aboutSlider = function () {
+    const COMPONENT = '.about-slider_component';
+    const components = [...document.querySelectorAll(COMPONENT)];
+    const options = {
+      loop: true,
+      slidesPerView: 'auto',
+    };
+    //apply a module with defaults settings (canc override them using the options object above)
+    const modules = {
+      navigation: false,
+      pagination: false,
+      scrollbar: false,
+      autoplay: true,
     };
     const sliders = createSlider(components, options, modules);
   };
@@ -71,13 +90,15 @@ document.addEventListener('DOMContentLoaded', function () {
         hoverActive(gsapContext);
         marquee(gsapContext);
         load(gsapContext);
-        resultsSlider();
-        testimonialsSlider();
         //conditional interactions
         if (!reduceMotion) {
           scrollIn(gsapContext);
           scrolling(gsapContext);
         }
+        //sliders
+        resultsSlider();
+        testimonialsSlider();
+        aboutSlider();
       }
     );
   };
