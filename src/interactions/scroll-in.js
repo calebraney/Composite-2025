@@ -27,7 +27,7 @@ export const scrollIn = function (gsapContext) {
   const EASE_SMALL = 0.1;
   const EASE_LARGE = 0.3;
   const DURATION = 0.6;
-  const EASE = 'power1.out';
+  const EASE = 'sine.out';
 
   //resuable timeline creation with option attributes for individual customization per element
   const scrollInTL = function (item) {
@@ -63,7 +63,7 @@ export const scrollIn = function (gsapContext) {
   const defaultTween = function (item, tl, options = {}) {
     const varsFrom = {
       opacity: 0,
-      y: '2rem',
+      y: '1rem',
     };
     const varsTo = {
       opacity: 1,
@@ -100,7 +100,7 @@ export const scrollIn = function (gsapContext) {
     const tween = defaultTween(splitText.words, tl, { stagger: 'small', skew: 'large' });
     //add event calleback to revert text on completion
     tl.eventCallback('onComplete', () => {
-      splitText.revert();
+      // splitText.revert();
     });
   };
 

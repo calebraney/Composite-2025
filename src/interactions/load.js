@@ -30,8 +30,8 @@ export const load = function (gsapContext) {
   const tl = gsap.timeline({
     paused: true,
     defaults: {
-      ease: 'power1.out',
-      duration: 0.8,
+      ease: 'sine.out',
+      duration: 0.6,
     },
   });
   //anything that needs to be set to start the interaction happens here
