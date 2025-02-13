@@ -56,8 +56,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const sliders = createSlider(components, options, modules);
   };
 
-  const aboutSlider = function () {
-    const COMPONENT = '.about-slider_component';
+  const aboutHeroSlider = function () {
+    const COMPONENT = '.about-hero-slider_component';
     const components = [...document.querySelectorAll(COMPONENT)];
     const options = {
       loop: true,
@@ -69,6 +69,73 @@ document.addEventListener('DOMContentLoaded', function () {
       pagination: false,
       scrollbar: false,
       autoplay: true,
+    };
+    const sliders = createSlider(components, options, modules);
+  };
+
+  const aboutRemoteSlider = function () {
+    const COMPONENT = '.remote-slider_component';
+    const components = [...document.querySelectorAll(COMPONENT)];
+    const options = {
+      loop: true,
+      slidesPerView: 'auto',
+      breakpoints: {
+        // mobile
+        320: {
+          spaceBetween: 16,
+        },
+        // tablet
+        768: {
+          spaceBetween: 32,
+        },
+        // desktop
+        992: {
+          spaceBetween: 48,
+        },
+        1280: {
+          spaceBetween: 64,
+        },
+      },
+    };
+    //apply a module with defaults settings (canc override them using the options object above)
+    const modules = {
+      navigation: false,
+      pagination: false,
+      scrollbar: false,
+      autoplay: true,
+    };
+    const sliders = createSlider(components, options, modules);
+  };
+
+  const workSlider = function () {
+    const COMPONENT = '.work-slider_component';
+    const components = [...document.querySelectorAll(COMPONENT)];
+    const options = {
+      slidesPerView: 'auto',
+      breakpoints: {
+        // mobile
+        320: {
+          spaceBetween: 16,
+        },
+        // tablet
+        768: {
+          spaceBetween: 32,
+        },
+        // desktop
+        992: {
+          spaceBetween: 48,
+        },
+        1280: {
+          spaceBetween: 64,
+        },
+      },
+    };
+    //apply a module with defaults settings (canc override them using the options object above)
+    const modules = {
+      navigation: true,
+      pagination: false,
+      scrollbar: false,
+      autoplay: false,
     };
     const sliders = createSlider(components, options, modules);
   };
@@ -98,7 +165,9 @@ document.addEventListener('DOMContentLoaded', function () {
         //sliders
         resultsSlider();
         testimonialsSlider();
-        aboutSlider();
+        aboutHeroSlider();
+        aboutRemoteSlider();
+        workSlider();
       }
     );
   };

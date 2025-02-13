@@ -97,8 +97,8 @@ export const createSlider = function (components, options, modules) {
       const autoplaySettings = {
         autoplay: {
           delay: 3000,
-          disableOnInteraction: true,
-          pauseOnMouseEnter: false,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
           stopOnLastSlide: true,
         },
       };
