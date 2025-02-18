@@ -3,7 +3,7 @@ import Lenis from '@studio-freight/lenis';
 export const initLenis = function () {
   const lenis = new Lenis({
     duration: 0.5,
-    wheelMultiplier: 0.4,
+    wheelMultiplier: 0.75,
     gestureOrientation: 'vertical',
     normalizeWheel: false,
     smoothTouch: false,
@@ -29,29 +29,64 @@ export const initLenis = function () {
   ////////////////////////////
   //Control Scrolling
 
-  // anchor links
-  function anchorLinks() {
-    const anchorLinks = document.querySelectorAll('[scroll-to]');
-    if (anchorLinks == null) {
-      return;
-    }
-    anchorLinks.forEach((item) => {
-      const targetID = item.getAttribute('scroll-to');
-      const target = document.getElementById(targetID);
-      if (!target) return;
+  // re-calculate scroll length when clicked
+  //utility function to refresh lenis after a delay of the click event
+  let resizeTimeout;
+  // Adjust delay as needed
+  function refreshLenisTimeout(delay = 600) {
+    clearTimeout(resizeTimeout); // Cancel previous resize calls
+    resizeTimeout = setTimeout(() => {
+      requestAnimationFrame(() => {
+        lenis.resize(); // Recalculate dimensions inside requestAnimationFrame for smoother transitions
+        console.log('refresh');
+      });
+    }, delay);
+  }
+
+  function refreshScroll() {
+    const triggers = [...document.querySelectorAll('[data-scroll="refresh"]')];
+    if (triggers.length === 0) return;
+    triggers.forEach((item) => {
+      if (!item) return;
       item.addEventListener('click', (event) => {
-        lenis.scrollTo(target, {
-          duration: 1.85,
-          easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
-        });
+        refreshLenisTimeout();
       });
     });
   }
-  anchorLinks();
+  refreshScroll();
+
+  function refreshScrollOnLazyLoad() {
+    const images = [...document.querySelectorAll("img[loading='lazy']")];
+    if (images.length === 0) return;
+    images.forEach((img) => {
+      img.addEventListener('load', refreshLenisTimeout);
+    });
+  }
+  refreshScrollOnLazyLoad();
+
+  // anchor links
+  //   function anchorLinks() {
+  //     const anchorLinks = document.querySelectorAll('[scroll-to]');
+  //     if (anchorLinks == null) {
+  //       return;
+  //     }
+  //     anchorLinks.forEach((item) => {
+  //       const targetID = item.getAttribute('scroll-to');
+  //       const target = document.getElementById(targetID);
+  //       if (!target) return;
+  //       item.addEventListener('click', (event) => {
+  //         lenis.scrollTo(target, {
+  //           duration: 1.85,
+  //           easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
+  //         });
+  //       });
+  //     });
+  //   }
+  //   anchorLinks();
 
   // stop page scrolling
   function stopScroll() {
-    const stopScrollLinks = document.querySelectorAll('[scroll="stop"]');
+    const stopScrollLinks = document.querySelectorAll('[data-scroll="stop"]');
     if (stopScrollLinks == null) {
       return;
     }
@@ -65,7 +100,7 @@ export const initLenis = function () {
 
   // start page scrolling
   function startScroll() {
-    const startScrollLinks = document.querySelectorAll('[scroll="start"]');
+    const startScrollLinks = document.querySelectorAll('[data-scroll="start"]');
     if (startScrollLinks == null) {
       return;
     }
@@ -79,7 +114,7 @@ export const initLenis = function () {
 
   // toggle page scrolling
   function toggleScroll() {
-    const toggleScrollLinks = document.querySelectorAll('[scroll="toggle"]');
+    const toggleScrollLinks = document.querySelectorAll('[data-scroll="toggle"]');
     if (toggleScrollLinks == null) {
       return;
     }
