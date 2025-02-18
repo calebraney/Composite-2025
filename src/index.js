@@ -7,6 +7,7 @@ import { createSlider } from './interactions/slider';
 import { scrolling } from './interactions/scrolling';
 import { runSplit } from './utilities';
 import SplitType from 'split-type';
+import { initLenis } from './interactions/lenis';
 
 document.addEventListener('DOMContentLoaded', function () {
   // Comment out for production
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (gsap.Flip !== undefined) {
     gsap.registerPlugin(Flip);
   }
+  let lenis;
 
   //////////////////////////////
   //Global Variables
@@ -156,6 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
       (gsapContext) => {
         let { isMobile, isTablet, isDesktop, reduceMotion } = gsapContext.conditions;
         //functional interactions
+        lenis = initLenis();
         hoverActive(gsapContext);
         marquee(gsapContext);
         load(gsapContext);
