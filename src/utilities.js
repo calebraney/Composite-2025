@@ -32,6 +32,35 @@ export const runSplit = function (text, types = 'lines, words') {
   return typeSplit;
 };
 
+export const createTextLines = function (text, tl) {
+  let splitText;
+  const createLines = function () {
+    splitText = runSplit(text, 'lines');
+    if (!splitText) return;
+    splitText.lines.forEach((span) => {
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('line-wrap');
+      span.parentNode.replaceChild(wrapper, span);
+      wrapper.appendChild(span);
+    });
+  };
+  createLines();
+
+  //revert text splitting if window is resized
+  let windowWidth = window.innerWidth;
+
+  window.addEventListener('resize', function () {
+    if (window.innerWidth !== windowWidth) {
+      windowWidth = window.innerWidth;
+      splitText.revert();
+      setTimeout(() => {
+        createLines();
+      }, 200);
+    }
+  });
+  return splitText.lines;
+};
+
 //check for attributes to stop animation on specific breakpoints
 export const checkBreakpoints = function (item, animationID, gsapContext) {
   //exit if items aren't found

@@ -5,6 +5,8 @@ import { marquee } from './interactions/marquee';
 import { scrollIn } from './interactions/scroll-in';
 import { createSlider } from './interactions/slider';
 import { scrolling } from './interactions/scrolling';
+import { runSplit } from './utilities';
+import SplitType from 'split-type';
 
 document.addEventListener('DOMContentLoaded', function () {
   // Comment out for production
@@ -160,6 +162,11 @@ document.addEventListener('DOMContentLoaded', function () {
         //conditional interactions
         if (!reduceMotion) {
           scrollIn(gsapContext);
+          // window.addEventListener('resize', function () {
+          //   setTimeout(() => {
+          //     scrollIn(gsapContext);
+          //   }, 300);
+          // });
           scrolling(gsapContext);
         }
         //sliders

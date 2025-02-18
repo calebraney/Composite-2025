@@ -1,4 +1,4 @@
-import { attr, checkBreakpoints, runSplit, getClipDirection } from '../utilities';
+import { attr, checkBreakpoints, runSplit, createTextLines, getClipDirection } from '../utilities';
 
 export const scrollIn = function (gsapContext) {
   //animation ID
@@ -7,6 +7,7 @@ export const scrollIn = function (gsapContext) {
   const ELEMENT = 'data-ix-scrollin';
   // types of scrolling elements (value for scrollin element attribute)
   const HEADING = 'heading';
+  const TEXT = 'text';
   const ITEM = 'item';
   const CONTAINER = 'container';
   const STAGGER = 'stagger';
@@ -25,7 +26,7 @@ export const scrollIn = function (gsapContext) {
 
   // DEFAULTS
   const EASE_SMALL = 0.1;
-  const EASE_LARGE = 0.3;
+  const EASE_LARGE = 0.2;
   const DURATION = 0.6;
   const EASE = 'sine.out';
 
@@ -63,14 +64,28 @@ export const scrollIn = function (gsapContext) {
   const defaultTween = function (item, tl, options = {}) {
     const varsFrom = {
       opacity: 0,
-      y: '1rem',
+      y: '1em',
     };
     const varsTo = {
       opacity: 1,
-      y: '0rem',
+      y: '0em',
     };
     //optional adjustments to the tween
-    // {stagger: 0.2}
+    // {rotate: large}
+    if (options.rotate) {
+      varsFrom.rotateX = options.rotate;
+      varsTo.rotateX = 0;
+    }
+    if (options.rotate === 'large') {
+      varsFrom.rotateX = -65;
+      varsFrom.scale = 0.95;
+      varsTo.rotateX = 0;
+      varsTo.scale = 1;
+    }
+    if (options.rotate === 'small') {
+      varsFrom.rotateX = -5;
+      varsTo.rotateX = 0;
+    }
     if (options.stagger) {
       varsTo.stagger = { each: options.stagger, from: 'start' };
     }
@@ -92,12 +107,30 @@ export const scrollIn = function (gsapContext) {
       item = item.firstChild;
     }
     //split the text
-    const splitText = runSplit(item);
-    if (!splitText) return;
+    const lines = createTextLines(item);
+    if (!lines) return;
     //set heading to full opacity (check to see if needed)
     // item.style.opacity = 1;
     const tl = scrollInTL(item);
-    const tween = defaultTween(splitText.words, tl, { stagger: 'small', skew: 'large' });
+    const tween = defaultTween(lines, tl, { stagger: 'large', rotate: 'large' });
+    //add event calleback to revert text on completion
+    tl.eventCallback('onComplete', () => {
+      // splitText.revert();
+    });
+  };
+
+  const scrollInText = function (item) {
+    //check if item is rich text
+    if (item.classList.contains('w-richtext')) {
+      item = item.firstChild;
+    }
+    //split the text
+    const lines = createTextLines(item);
+    if (!lines) return;
+    //set heading to full opacity (check to see if needed)
+    // item.style.opacity = 1;
+    const tl = scrollInTL(item);
+    const tween = defaultTween(lines, tl, { stagger: 'small', rotate: 'small' });
     //add event calleback to revert text on completion
     tl.eventCallback('onComplete', () => {
       // splitText.revert();
@@ -113,11 +146,11 @@ export const scrollIn = function (gsapContext) {
       if (children.length === 0) return;
       children.forEach((child) => {
         const tl = scrollInTL(child);
-        const tween = defaultTween(child, tl);
+        const tween = defaultTween(child, tl, { rotate: 'small' });
       });
     } else {
       const tl = scrollInTL(item);
-      const tween = defaultTween(item, tl);
+      const tween = defaultTween(item, tl, { rotate: 'small' });
     }
   };
 
@@ -177,7 +210,7 @@ export const scrollIn = function (gsapContext) {
     if (children.length === 0) return;
     children.forEach((child) => {
       const tl = scrollInTL(child);
-      const tween = defaultTween(child, tl);
+      const tween = defaultTween(child, tl, { rotate: 'small' });
     });
   };
 
@@ -188,7 +221,7 @@ export const scrollIn = function (gsapContext) {
     const children = gsap.utils.toArray(item.children);
     if (children.length === 0) return;
     const tl = scrollInTL(item);
-    const tween = defaultTween(children, tl, { stagger: ease });
+    const tween = defaultTween(children, tl, { stagger: ease, rotate: 'small' });
   };
 
   const scrollInRichText = function (item) {
@@ -211,7 +244,7 @@ export const scrollIn = function (gsapContext) {
   };
 
   //get all elements and apply animations
-  const items = gsap.utils.toArray(`[${ELEMENT}]`);
+  const items = [...document.querySelectorAll(`[${ELEMENT}]`)];
   items.forEach((item) => {
     if (!item) return;
     //check breakpoints and quit function if set on specific breakpoints
@@ -221,6 +254,9 @@ export const scrollIn = function (gsapContext) {
     const scrollInType = item.getAttribute(ELEMENT);
     if (scrollInType === HEADING) {
       scrollInHeading(item);
+    }
+    if (scrollInType === TEXT) {
+      scrollInText(item);
     }
     if (scrollInType === ITEM) {
       scrollInItem(item);
