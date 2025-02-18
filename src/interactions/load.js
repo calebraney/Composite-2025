@@ -164,7 +164,6 @@ export const load = function (gsapContext) {
 
   //Play interaction on page load
   tl.play(0);
-  console.log(tl);
   // Alternatively use the returned tl to trigger the interaction after transition or image load
   return tl;
 };

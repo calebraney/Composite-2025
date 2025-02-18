@@ -1064,7 +1064,6 @@
       }
     });
     tl.play(0);
-    console.log(tl);
     return tl;
   };
 
