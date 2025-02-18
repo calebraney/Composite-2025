@@ -2,7 +2,7 @@
 import Lenis from '@studio-freight/lenis';
 export const initLenis = function () {
   const lenis = new Lenis({
-    lerp: 0.05,
+    duration: 0.5,
     wheelMultiplier: 0.4,
     gestureOrientation: 'vertical',
     normalizeWheel: false,
