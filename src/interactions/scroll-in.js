@@ -28,7 +28,7 @@ export const scrollIn = function (gsapContext) {
   const EASE_SMALL = 0.1;
   const EASE_LARGE = 0.2;
   const DURATION = 0.6;
-  const EASE = 'sine.out';
+  const EASE = 'circ.out';
 
   //resuable timeline creation with option attributes for individual customization per element
   const scrollInTL = function (item) {
@@ -77,7 +77,7 @@ export const scrollIn = function (gsapContext) {
       varsTo.rotateX = 0;
     }
     if (options.rotate === 'large') {
-      varsFrom.rotateX = -65;
+      varsFrom.rotateX = -80;
       varsFrom.scale = 0.95;
       varsTo.rotateX = 0;
       varsTo.scale = 1;

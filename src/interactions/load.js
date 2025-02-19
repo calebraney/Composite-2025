@@ -31,7 +31,7 @@ export const load = function (gsapContext) {
   const tl = gsap.timeline({
     paused: true,
     defaults: {
-      ease: 'sine.out',
+      ease: 'circ.out',
       duration: 0.6,
     },
   });
@@ -62,7 +62,7 @@ export const load = function (gsapContext) {
     tl.set(item, { opacity: 1 }, position);
     tl.fromTo(
       lines,
-      { opacity: 0, y: '1em', rotateX: -65, scale: 0.85 },
+      { opacity: 0, y: '1em', rotateX: -80, scale: 0.85 },
       {
         opacity: 1,
         y: '0em',
@@ -103,7 +103,12 @@ export const load = function (gsapContext) {
     if (staggerPosition !== null) {
       position = staggerPosition;
     }
-    tl.fromTo(item, { opacity: 0, y: '2rem' }, { opacity: 1, y: '0rem' }, position);
+    tl.fromTo(
+      item,
+      { opacity: 0, y: '2rem', rotateX: -45, scale: 0.9 },
+      { opacity: 1, y: '0rem', rotateX: 0, scale: 1 },
+      position
+    );
   };
 
   //add item tween to each element in this parent
