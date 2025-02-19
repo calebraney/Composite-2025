@@ -17,6 +17,7 @@ export const load = function (gsapContext) {
   // hero animation selectors
   const HEADING = 'heading';
   const ITEM = 'item';
+  const CARD = 'card';
   const TEXT = 'text';
   const IMAGE = 'image';
   const STAGGER = 'stagger';
@@ -103,6 +104,16 @@ export const load = function (gsapContext) {
     if (staggerPosition !== null) {
       position = staggerPosition;
     }
+    tl.fromTo(item, { opacity: 0, y: '2rem' }, { opacity: 1, y: '0rem' }, position);
+  };
+
+  const loadCard = function (item, staggerPosition = null) {
+    // get the position attribute
+    let position = attr(DEFAULT_STAGGER, item.getAttribute(POSITION));
+    //if a specific position is set for staggering update the position of this item accordingly
+    if (staggerPosition !== null) {
+      position = staggerPosition;
+    }
     tl.fromTo(
       item,
       { opacity: 0, y: '2rem', rotateX: -45, scale: 0.9 },
@@ -161,6 +172,9 @@ export const load = function (gsapContext) {
     }
     if (loadType === ITEM) {
       loadItem(item);
+    }
+    if (loadType === CARD) {
+      loadCard(item);
     }
     if (loadType === STAGGER) {
       loadStagger(item);
